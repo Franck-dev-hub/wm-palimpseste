@@ -4,7 +4,7 @@
 
 ## Prérequis
 
-- [Node.js](https://nodejs.org) 24 (`.nvmrc`).
+- [Node.js](https://nodejs.org) 24.15 ou plus (`.nvmrc`).
 - [pnpm](https://pnpm.io) 12 : `corepack enable` suffit, le champ `packageManager` de `package.json` fixe la version exacte. Sinon, installer pnpm 12.
 
 ## Commandes
@@ -18,12 +18,15 @@ pnpm watch       # recompile les deux navigateurs à chaque sauvegarde, source m
 pnpm typecheck   # tsc sur src et scripts
 pnpm lint:quick  # typecheck, ESLint, Prettier
 pnpm lint        # lint:quick, build, web-ext lint sur dist/firefox
+pnpm test        # Vitest et jsdom sur src/**/*.test.ts
+pnpm test:watch  # relance les tests à chaque sauvegarde
 pnpm format      # corrige les fichiers avec Prettier et ESLint
 ```
 
-**Hooks Git** : `pre-commit` lance `pnpm lint:quick`, `pre-push` lance `pnpm lint`. `--no-verify` les contourne.
+**Hooks Git** : `pre-commit` lance `pnpm lint:quick`, `pre-push` lance `pnpm lint` puis `pnpm test`. `--no-verify` les contourne.
 
-Les tests arrivent plus tard.
+Les tests sont à côté du code (`src/**/*.test.ts`) et lisent des captures HTML du site dans `test/fixtures/`.\
+La première ligne d'une capture donne son URL et sa date : la recapturer quand le site change, sans pseudo réel.
 
 ## Charger l'extension
 
