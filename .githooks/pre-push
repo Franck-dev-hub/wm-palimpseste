@@ -1,3 +1,3 @@
 #!/bin/sh
-# Full lint with the build: too slow for every commit.
-exec pnpm lint
+# Lint with the build, then the tests: too slow for every commit.
+pnpm lint && pnpm test
