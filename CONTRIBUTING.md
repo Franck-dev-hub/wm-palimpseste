@@ -25,6 +25,8 @@ pnpm format      # fixes the files with Prettier and ESLint
 
 **Git hooks**: `pre-commit` runs `pnpm lint:quick`, `pre-push` runs `pnpm lint` then `pnpm test`. `--no-verify` skips them.
 
+**CI**: GitHub Actions runs `pnpm audit --audit-level=high`, `pnpm lint` and `pnpm test` on every push and pull request. The `check` job must pass to merge into `main`.
+
 Tests sit next to the code (`src/**/*.test.ts`) and read HTML captures of the site from `test/fixtures/`.\
 The first line of a capture gives its URL and date: recapture it when the site changes, with no real player name.
 
