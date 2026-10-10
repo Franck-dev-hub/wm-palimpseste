@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) 24 (`.nvmrc`).
+- [Node.js](https://nodejs.org) 24.15 or later (`.nvmrc`).
 - [pnpm](https://pnpm.io) 12: `corepack enable` is enough, the `packageManager` field of `package.json` pins the exact version. Otherwise, install pnpm 12.
 
 ## Commands
@@ -18,12 +18,15 @@ pnpm watch       # rebuilds both browsers on every save, with source maps
 pnpm typecheck   # tsc on src and scripts
 pnpm lint:quick  # typecheck, ESLint, Prettier
 pnpm lint        # lint:quick, build, web-ext lint on dist/firefox
+pnpm test        # Vitest and jsdom on src/**/*.test.ts
+pnpm test:watch  # reruns the tests on every save
 pnpm format      # fixes the files with Prettier and ESLint
 ```
 
-**Git hooks**: `pre-commit` runs `pnpm lint:quick`, `pre-push` runs `pnpm lint`. `--no-verify` skips them.
+**Git hooks**: `pre-commit` runs `pnpm lint:quick`, `pre-push` runs `pnpm lint` then `pnpm test`. `--no-verify` skips them.
 
-Tests come later.
+Tests sit next to the code (`src/**/*.test.ts`) and read HTML captures of the site from `test/fixtures/`.\
+The first line of a capture gives its URL and date: recapture it when the site changes, with no real player name.
 
 ## Load the extension
 
