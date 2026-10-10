@@ -27,3 +27,5 @@ npm-debug.log*
 /*.md
 !README.md
 !README.fr.md
+!CONTRIBUTING.md
+!CONTRIBUTING.fr.md
