@@ -26,3 +26,6 @@ npm-debug.log*
 .DS_Store
 /*.md
 !README.md
+!README.fr.md
+!CONTRIBUTING.md
+!CONTRIBUTING.fr.md
