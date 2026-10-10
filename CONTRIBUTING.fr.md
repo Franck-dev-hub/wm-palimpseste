@@ -5,63 +5,36 @@
 ## Prérequis
 
 - [Node.js](https://nodejs.org) 24.15 ou plus (`.nvmrc`).
-- [pnpm](https://pnpm.io) 12 : `corepack enable` suffit, le champ `packageManager` de `package.json` fixe la version exacte. Sinon, installer pnpm 12.
+- [pnpm](https://pnpm.io) 12 : `corepack enable`.
 
 ## Commandes
 
 ```sh
 git clone https://github.com/Franck-dev-hub/wm-palimpseste.git
 cd wm-palimpseste
-pnpm install     # active aussi les hooks Git
-pnpm build       # dist/firefox et dist/chromium, sans source maps
-pnpm watch       # recompile les deux navigateurs à chaque sauvegarde, source maps incluses
-pnpm typecheck   # tsc sur src et scripts
-pnpm lint:quick  # typecheck, ESLint, Prettier
-pnpm lint        # lint:quick, build, web-ext lint sur dist/firefox
-pnpm test        # Vitest et jsdom sur src/**/*.test.ts
-pnpm test:watch  # relance les tests à chaque sauvegarde
-pnpm format      # corrige les fichiers avec Prettier et ESLint
+pnpm install  # active aussi les hooks Git
+pnpm watch    # recompile dist/firefox et dist/chromium à chaque sauvegarde
+pnpm lint
+pnpm test
+pnpm format
 ```
 
-**Hooks Git** : `pre-commit` lance `pnpm lint:quick`, `pre-push` lance `pnpm lint` puis `pnpm test`. `--no-verify` les contourne.
+Les hooks Git et la CI lancent le lint et les tests ; le job `check` de la CI doit passer pour merger dans `main`.
 
-**CI** : GitHub Actions lance `pnpm audit --audit-level=high`, `pnpm lint` et `pnpm test` à chaque push et pull request. Le job `check` doit passer pour merger dans `main`.
-
-Les tests sont à côté du code (`src/**/*.test.ts`) et lisent des captures HTML du site dans `test/fixtures/`.\
+Les tests lisent des captures HTML du site dans `test/fixtures/`.\
 La première ligne d'une capture donne son URL et sa date : la recapturer quand le site change, sans pseudo réel.
 
 ## Charger l'extension
 
-### Firefox (Gecko)
+| Navigateur    | Page                                                                       | Action                                                                        |
+|---------------|----------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| Firefox       | `about:debugging#/runtime/this-firefox`                                    | **Charger un module complémentaire temporaire**, `dist/firefox/manifest.json` |
+| Chrome, Brave | `chrome://extensions` ou `brave://extensions`, **Mode développeur** activé | **Charger l'extension non empaquetée**, `dist/chromium/`                      |
 
-1. Ouvrir `about:debugging#/runtime/this-firefox`.
-2. Cliquer sur **Charger un module complémentaire temporaire** et choisir `dist/firefox/manifest.json`.
-3. Ouvrir [wiki-masters.com](https://www.wiki-masters.com).
-
-### Chrome, Brave (Chromium)
-
-1. Ouvrir `brave://extensions` (Chrome : `chrome://extensions`) et activer le **Mode développeur**.
-2. Cliquer sur **Charger l'extension non empaquetée** et choisir le dossier `dist/chromium/`.
-3. Ouvrir [wiki-masters.com](https://www.wiki-masters.com).
-
-## Recharger
-
-Après une recompilation, cliquer sur **Actualiser** (`about:debugging`) ou sur la flèche de rechargement (`brave://extensions`), puis recharger l'onglet du site.\
-Pas de rechargement automatique : Turnstile bloque les navigateurs automatisés sur le site (`web-ext run`, Playwright).\
+Après une recompilation, recharger l'extension puis l'onglet du site.\
 Firefox oublie un module temporaire à sa fermeture.
 
 ## Logs
 
-- Content script : console de la page [wiki-masters.com](https://www.wiki-masters.com).
-- Background, Firefox : **Examiner** sur l'extension dans `about:debugging`, puis **Actualiser**, filtre **Informations** actif.
-- Background, Chromium : lien **service worker** sur l'extension dans `brave://extensions`, une fois marqué inactif.
-- Le background s'arrête quand il est inactif et ne logge qu'à son démarrage.
-
-## Comportement de `pnpm watch`
-
-- Une erreur de syntaxe s'affiche et le watch continue, mais les `.js` disparaissent de `dist/` jusqu'à la correction : un rechargement échoue entre-temps.
-- Modifier `src/manifest.json` ou `scripts/build.ts` relance le build : `dist/` est brièvement vide.
-
-## Firefox Android
-
-Déclaré (142+), non testé.
+- Content script : console de la page du site.
+- Background : **Examiner** dans `about:debugging`, ou le lien **service worker** dans `chrome://extensions`.
