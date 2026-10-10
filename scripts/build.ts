@@ -10,11 +10,17 @@ const writeManifests: esbuild.Plugin = {
     build.onEnd(async (result) => {
       if (result.errors.length) return;
 
-      const { minimum_chrome_version: _chrome, ...firefox } = base;
-      const { browser_specific_settings: _gecko, ...chromium } = base;
       const manifests = {
-        firefox: { ...firefox, background: { scripts: ['background.js'] } },
-        chromium: { ...chromium, background: { service_worker: 'background.js' } },
+        firefox: {
+          ...base,
+          minimum_chrome_version: undefined,
+          background: { scripts: ['background.js'] },
+        },
+        chromium: {
+          ...base,
+          browser_specific_settings: undefined,
+          background: { service_worker: 'background.js' },
+        },
       };
 
       for (const [browser, manifest] of Object.entries(manifests)) {

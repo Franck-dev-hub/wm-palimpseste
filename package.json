@@ -9,12 +9,21 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit && tsc --noEmit -p scripts",
+    "lint:quick": "pnpm typecheck && eslint . && prettier --check .",
+    "lint": "pnpm lint:quick && pnpm build && web-ext lint --source-dir dist/firefox --warnings-as-errors",
+    "format": "prettier --write . && eslint --fix .",
     "build": "node scripts/build.ts",
     "watch": "node --watch --watch-preserve-output scripts/build.ts --watch"
   },
   "devDependencies": {
-    "@types/node": "^24.19.1",
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "@typescript/native": "npm:typescript@7.0.2",
     "esbuild": "0.28.2",
-    "typescript": "7.0.2"
+    "eslint": "10.12.0",
+    "prettier": "3.9.9",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript-eslint": "8.71.1",
+    "web-ext": "10.7.0"
   }
 }
