@@ -1,0 +1,8 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "dependencyDashboardApproval": true,
+  "commitMessagePrefix": "[Chore]",
+  "minimumReleaseAge": "1 day",
+  "osvVulnerabilityAlerts": true
+}
