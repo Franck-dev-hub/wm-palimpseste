@@ -13,7 +13,8 @@
     "lint": "pnpm lint:quick && pnpm build && web-ext lint --source-dir dist/firefox --warnings-as-errors",
     "format": "prettier --write . && eslint --fix .",
     "build": "node scripts/build.ts",
-    "watch": "node --watch --watch-preserve-output scripts/build.ts --watch"
+    "watch": "node --watch --watch-preserve-output scripts/build.ts --watch",
+    "prepare": "git rev-parse --git-dir >/dev/null 2>&1 && git config core.hooksPath .githooks || true"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

@@ -1,0 +1,3 @@
+#!/bin/sh
+# Full lint with the build: too slow for every commit.
+exec pnpm lint
