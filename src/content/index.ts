@@ -1,0 +1,1 @@
+console.info('[Palimpseste] content script chargé', location.href);

@@ -53,32 +53,55 @@ Les réglages sont dans la page d'options de l'extension. Les mises à jour sont
 
 <details><summary>Aide au développement</summary>
 
-Prérequis : [Node.js](https://nodejs.org) LTS.
+Prérequis :
+
+- [Node.js](https://nodejs.org) 24 (`.nvmrc`).
+- [pnpm](https://pnpm.io) 11 : `corepack enable` suffit, le champ `packageManager` de `package.json` fixe pnpm 11.17.0. Sinon, installer pnpm 11.
 
 ```sh
 git clone https://github.com/Franck-dev-hub/wm-palimpseste.git
 cd wm-palimpseste
-npm ci
-npm run build   # ou npm run watch : recompile à chaque sauvegarde
+pnpm install
+pnpm build       # dist/firefox et dist/chromium, sans source maps
+pnpm watch       # recompile les deux navigateurs à chaque sauvegarde, source maps incluses
+pnpm typecheck   # tsc sur src et scripts
 ```
 
-**Firefox**
+Lint et tests arrivent plus tard.
+
+**Firefox (Gecko)**
 
 1. Ouvrir `about:debugging#/runtime/this-firefox`.
 2. Cliquer sur **Charger un module complémentaire temporaire** et choisir `dist/firefox/manifest.json`.
 3. Ouvrir [wiki-masters.com](https://www.wiki-masters.com).
 
-**Chrome, Brave**
+**Chrome, Brave (Chromium)**
 
-1. Ouvrir `chrome://extensions` (Brave : `brave://extensions`) et activer le **Mode développeur**.
+1. Ouvrir `brave://extensions` (Chrome : `chrome://extensions`) et activer le **Mode développeur**.
 2. Cliquer sur **Charger l'extension non empaquetée** et choisir le dossier `dist/chromium/`.
 3. Ouvrir [wiki-masters.com](https://www.wiki-masters.com).
 
-Après une modification : recharger l'extension (`about:debugging` ou `chrome://extensions`), puis l'onglet du site.\
+**Recharger**
+
+Après une recompilation, cliquer sur **Actualiser** (`about:debugging`) ou sur la flèche de rechargement (`brave://extensions`), puis recharger l'onglet du site.\
+Pas de rechargement automatique : Turnstile bloque les navigateurs automatisés sur le site (`web-ext run`, Playwright).\
 Firefox oublie un module temporaire à sa fermeture.
 
-Avant de proposer une modification : `npm run lint && npm test`.\
-`web-ext run` et Playwright ne fonctionnent pas sur le site : Turnstile bloque les navigateurs automatisés.
+**Logs**
+
+- Content script : console de la page [wiki-masters.com](https://www.wiki-masters.com).
+- Background, Firefox : **Examiner** sur l'extension dans `about:debugging`, puis **Actualiser**, filtre **Informations** actif.
+- Background, Chromium : lien **service worker** sur l'extension dans `brave://extensions`, une fois marqué inactif.
+- Le background s'arrête quand il est inactif et ne logge qu'à son démarrage.
+
+**Comportement de `pnpm watch`**
+
+- Une erreur de syntaxe s'affiche et le watch continue, mais les `.js` disparaissent de `dist/` jusqu'à la correction : un rechargement échoue entre-temps.
+- Modifier `src/manifest.json` ou `scripts/build.ts` relance le build : `dist/` est brièvement vide.
+
+**Firefox Android**
+
+Déclaré (142+), non testé.
 
 </details>
 
