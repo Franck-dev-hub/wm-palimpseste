@@ -21,6 +21,26 @@ export default defineConfig(
     },
   },
   {
+    files: ['src/**/*.ts'],
+    ignores: ['src/content/dom/**'],
+    rules: {
+      'no-restricted-properties': [
+        'error',
+        ...[
+          'querySelector',
+          'querySelectorAll',
+          'closest',
+          'matches',
+          'getElementsByClassName',
+          'getElementsByTagName',
+        ].map((property) => ({
+          property,
+          message: 'Use query/queryAll from src/content/dom/: they skip our nodes.',
+        })),
+      ],
+    },
+  },
+  {
     files: ['**/*.test.ts'],
     extends: [vitest.configs.recommended],
   },
