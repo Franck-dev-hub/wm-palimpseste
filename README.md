@@ -56,7 +56,7 @@ Les réglages sont dans la page d'options de l'extension. Les mises à jour sont
 Prérequis :
 
 - [Node.js](https://nodejs.org) 24 (`.nvmrc`).
-- [pnpm](https://pnpm.io) 11 : `corepack enable` suffit, le champ `packageManager` de `package.json` fixe pnpm 11.17.0. Sinon, installer pnpm 11.
+- [pnpm](https://pnpm.io) 12 : `corepack enable` suffit, le champ `packageManager` de `package.json` fixe la version exacte. Sinon, installer pnpm 12.
 
 ```sh
 git clone https://github.com/Franck-dev-hub/wm-palimpseste.git
