@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Extension non officielle qui enrichit l'affichage de WikiMasters.",
   "minimum_chrome_version": "111",
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "matches": ["https://*.wiki-masters.com/*"],
