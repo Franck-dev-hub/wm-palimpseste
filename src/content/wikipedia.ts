@@ -3,6 +3,7 @@ import { inDetailModal, title } from './dom/anchors';
 import { mark } from './dom/query';
 import { watch } from './dom/watch';
 import type { Start } from './features';
+import './wikipedia.css';
 
 export const wikipediaUrl = (title: string): string =>
   'https://fr.wikipedia.org/wiki/' + encodeURIComponent(title.replaceAll(' ', '_'));
