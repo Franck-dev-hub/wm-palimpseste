@@ -1,10 +1,10 @@
 import { fakeBrowser } from '@webext-core/fake-browser';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ext } from '../shared/ext';
-import { features } from '../shared/features';
-import { setFeature } from '../shared/settings';
-import html from './options.html?raw';
-import { renderOptions } from './page';
+import { ext } from '../../src/shared/ext';
+import { features } from '../../src/shared/features';
+import { setFeature } from '../../src/shared/settings';
+import html from '../../src/options/options.html?raw';
+import { renderOptions } from '../../src/options/page';
 
 const registry = [
   { id: 'alpha', nameKey: 'alphaName', descriptionKey: 'alphaDesc', default: true },

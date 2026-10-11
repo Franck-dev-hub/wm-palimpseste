@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { assertFeatureId } from '../content/dom/query';
-import { features, type Feature } from './features';
+import { assertFeatureId } from '../../src/content/dom/query';
+import { features, type Feature } from '../../src/shared/features';
 
 const registryErrors = (registry: readonly Feature[]): string[] => {
   const errors: string[] = [];

@@ -1,18 +1,18 @@
 import { fakeBrowser } from '@webext-core/fake-browser';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import collection from '../../test/fixtures/collection.html?raw';
-import echanger from '../../test/fixtures/echanger.html?raw';
-import modale from '../../test/fixtures/modale.html?raw';
-import revele from '../../test/fixtures/revele.html?raw';
-import { ext } from '../shared/ext';
-import { features } from '../shared/features';
-import { setFeature } from '../shared/settings';
-import { starters } from './features';
-import { startRunner } from './runner';
-import { anchors } from './dom/anchors';
-import { query, queryAll } from './dom/query';
-import { scan } from './dom/watch';
-import { startWikipedia, wikipediaUrl } from './wikipedia';
+import collection from '../fixtures/collection.html?raw';
+import echanger from '../fixtures/echanger.html?raw';
+import modale from '../fixtures/modale.html?raw';
+import revele from '../fixtures/revele.html?raw';
+import { ext } from '../../src/shared/ext';
+import { features } from '../../src/shared/features';
+import { setFeature } from '../../src/shared/settings';
+import { starters } from '../../src/content/features';
+import { startRunner } from '../../src/content/runner';
+import { anchors } from '../../src/content/dom/anchors';
+import { query, queryAll } from '../../src/content/dom/query';
+import { scan } from '../../src/content/dom/watch';
+import { startWikipedia, wikipediaUrl } from '../../src/content/wikipedia';
 
 const base = 'https://fr.wikipedia.org/wiki/';
 

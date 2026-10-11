@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import en from '../_locales/en/messages.json';
-import fr from '../_locales/fr/messages.json';
-import manifest from '../manifest.json';
-import optionsHtml from '../options/options.html?raw';
-import { contentMessageKeys } from '../content/wikipedia';
-import { features, type Feature } from './features';
+import en from '../../src/_locales/en/messages.json';
+import fr from '../../src/_locales/fr/messages.json';
+import manifest from '../../src/manifest.json';
+import optionsHtml from '../../src/options/options.html?raw';
+import { contentMessageKeys } from '../../src/content/wikipedia';
+import { features, type Feature } from '../../src/shared/features';
 
 type Messages = Record<string, { message: string }>;
 

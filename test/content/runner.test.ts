@@ -1,8 +1,8 @@
 import { fakeBrowser } from '@webext-core/fake-browser';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { setFeature } from '../shared/settings';
-import { ext } from '../shared/ext';
-import { startRunner } from './runner';
+import { setFeature } from '../../src/shared/settings';
+import { ext } from '../../src/shared/ext';
+import { startRunner } from '../../src/content/runner';
 
 const registry = [
   { id: 'alpha', default: true },

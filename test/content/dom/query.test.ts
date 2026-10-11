@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { mark, query, queryAll } from './query';
+import { mark, query, queryAll } from '../../../src/content/dom/query';
 
 beforeEach(() => {
   document.body.innerHTML = '';
