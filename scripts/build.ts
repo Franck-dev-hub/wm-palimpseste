@@ -33,29 +33,25 @@ const writeManifests: esbuild.Plugin = {
   },
 };
 
+const roots = {
+  content: 'src/content/index.ts',
+  background: 'src/background/index.ts',
+  options: 'src/options/options.ts',
+};
+
 const options: esbuild.BuildOptions = {
-  entryPoints: [
-    { in: 'src/content/index.ts', out: 'firefox/content' },
-    { in: 'src/background/index.ts', out: 'firefox/background' },
-    { in: 'src/content/index.ts', out: 'chromium/content' },
-    { in: 'src/background/index.ts', out: 'chromium/background' },
-    { in: 'src/options/options.ts', out: 'firefox/options' },
-    { in: 'src/options/options.ts', out: 'chromium/options' },
-    { in: 'src/options/options.css', out: 'firefox/options' },
-    { in: 'src/options/options.css', out: 'chromium/options' },
-  ],
+  entryPoints: ['firefox', 'chromium'].flatMap((browser) =>
+    Object.entries(roots).map(([out, path]) => ({ in: path, out: `${browser}/${out}` })),
+  ),
   outdir: 'dist',
   bundle: true,
   format: 'iife',
-  // Keep in sync with the manifest minimum versions.
   target: ['firefox140', 'chrome111'],
-  // Inline: linked maps are fragile under Firefox.
   sourcemap: watch ? 'inline' : false,
   logLevel: 'info',
   plugins: [writeManifests],
 };
 
-// An onStart hook would wipe dist on every rebuild.
 await rm('dist', { recursive: true, force: true });
 
 if (watch) {

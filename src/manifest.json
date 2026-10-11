@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "__MSG_extDescription__",
   "default_locale": "fr",
   "minimum_chrome_version": "111",
@@ -13,7 +13,8 @@
   "content_scripts": [
     {
       "matches": ["https://*.wiki-masters.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
   ],
   "browser_specific_settings": {

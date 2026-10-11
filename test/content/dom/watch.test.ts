@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import collection from '../../../test/fixtures/collection.html?raw';
-import modale from '../../../test/fixtures/modale.html?raw';
-import revele from '../../../test/fixtures/revele.html?raw';
-import { anchors } from './anchors';
-import { mark, queryAll } from './query';
-import { scan, watch } from './watch';
+import collection from '../../fixtures/collection.html?raw';
+import modale from '../../fixtures/modale.html?raw';
+import revele from '../../fixtures/revele.html?raw';
+import { anchors } from '../../../src/content/dom/anchors';
+import { mark, queryAll } from '../../../src/content/dom/query';
+import { scan, watch } from '../../../src/content/dom/watch';
 
 const stops: (() => void)[] = [];
 const start = (...args: Parameters<typeof watch>): (() => void) => {

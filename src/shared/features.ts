@@ -5,6 +5,13 @@ export interface Feature {
   default: boolean;
 }
 
-export const features = [] as const satisfies readonly Feature[];
+export const features = [
+  {
+    id: 'wikipedia',
+    nameKey: 'wikipediaName',
+    descriptionKey: 'wikipediaDescription',
+    default: true,
+  },
+] as const satisfies readonly Feature[];
 
 export type FeatureId = (typeof features)[number]['id'];

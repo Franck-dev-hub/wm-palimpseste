@@ -1,7 +1,12 @@
 import { fakeBrowser } from '@webext-core/fake-browser';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ext } from './ext';
-import { onSettingsChanged, parseSettings, readSettings, setFeature } from './settings';
+import { ext } from '../../src/shared/ext';
+import {
+  onSettingsChanged,
+  parseSettings,
+  readSettings,
+  setFeature,
+} from '../../src/shared/settings';
 
 const registry = [
   { id: 'alpha', default: true },

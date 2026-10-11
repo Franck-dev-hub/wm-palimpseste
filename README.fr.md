@@ -32,6 +32,8 @@ Plus d'infos sur les cartes, les tirages et le marché.
 
 Statut : en développement.
 
+- **Bouton Wikipédia** : une pastille W sur chaque carte ouvre son article Wikipédia dans un nouvel onglet. Désactivable dans les options.
+
 ---
 
 ## Installation

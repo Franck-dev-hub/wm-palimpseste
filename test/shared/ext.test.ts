@@ -12,7 +12,7 @@ describe('ext', () => {
     vi.stubGlobal('chrome', {});
     vi.resetModules();
 
-    const { ext } = await import('./ext');
+    const { ext } = await import('../../src/shared/ext');
 
     expect(ext).toBe(fakeBrowser);
   });
@@ -23,13 +23,13 @@ describe('ext', () => {
     vi.stubGlobal('chrome', fakeChrome);
     vi.resetModules();
 
-    const { ext } = await import('./ext');
+    const { ext } = await import('../../src/shared/ext');
 
     expect(ext).toBe(fakeChrome);
   });
 
   it('runs on the fake browser from the test setup', async () => {
-    const { ext } = await import('./ext');
+    const { ext } = await import('../../src/shared/ext');
 
     await ext.storage.local.set({ key: 'value' });
 
