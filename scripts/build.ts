@@ -27,6 +27,10 @@ const writeManifests: esbuild.Plugin = {
         await mkdir(`dist/${browser}`, { recursive: true });
         await writeFile(`dist/${browser}/manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`);
         await cp('src/_locales', `dist/${browser}/_locales`, { recursive: true });
+        await cp('src/icons', `dist/${browser}/icons`, {
+          recursive: true,
+          filter: (path) => !path.endsWith('.svg'),
+        });
         await cp('src/options/options.html', `dist/${browser}/options.html`);
       }
     });

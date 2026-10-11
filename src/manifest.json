@@ -1,9 +1,14 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "__MSG_extDescription__",
   "default_locale": "fr",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
   "minimum_chrome_version": "111",
   "permissions": ["storage"],
   "options_ui": {
@@ -19,7 +24,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "palimpseste@exemple.local",
+      "id": "palimpseste@franck-dev-hub.github.io",
       "strict_min_version": "140.0",
       "data_collection_permissions": {
         "required": ["none"]
