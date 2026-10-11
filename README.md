@@ -32,6 +32,8 @@ More info on cards, pulls and the market.
 
 Status: in development.
 
+- **Wikipedia button**: a W badge on every card opens its Wikipedia article in a new tab. Can be turned off in the options.
+
 ---
 
 ## Installation
