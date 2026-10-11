@@ -14,5 +14,17 @@
   "optionsEmpty": {
     "message": "Aucune feature pour l'instant.",
     "description": "Options page text when no feature exists"
+  },
+  "wikipediaName": {
+    "message": "Bouton Wikipédia",
+    "description": "Wikipedia button feature name"
+  },
+  "wikipediaDescription": {
+    "message": "Ajoute sur chaque carte un lien vers son article Wikipédia.",
+    "description": "Wikipedia button feature description"
+  },
+  "wikipediaOpen": {
+    "message": "Ouvrir l'article Wikipédia",
+    "description": "Wikipedia button tooltip and aria-label"
   }
 }

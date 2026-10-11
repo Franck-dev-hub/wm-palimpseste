@@ -41,21 +41,20 @@ const options: esbuild.BuildOptions = {
     { in: 'src/background/index.ts', out: 'chromium/background' },
     { in: 'src/options/options.ts', out: 'firefox/options' },
     { in: 'src/options/options.ts', out: 'chromium/options' },
+    { in: 'src/content/content.css', out: 'firefox/content' },
+    { in: 'src/content/content.css', out: 'chromium/content' },
     { in: 'src/options/options.css', out: 'firefox/options' },
     { in: 'src/options/options.css', out: 'chromium/options' },
   ],
   outdir: 'dist',
   bundle: true,
   format: 'iife',
-  // Keep in sync with the manifest minimum versions.
   target: ['firefox140', 'chrome111'],
-  // Inline: linked maps are fragile under Firefox.
   sourcemap: watch ? 'inline' : false,
   logLevel: 'info',
   plugins: [writeManifests],
 };
 
-// An onStart hook would wipe dist on every rebuild.
 await rm('dist', { recursive: true, force: true });
 
 if (watch) {

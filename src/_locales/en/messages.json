@@ -14,5 +14,17 @@
   "optionsEmpty": {
     "message": "No feature yet.",
     "description": "Options page text when no feature exists"
+  },
+  "wikipediaName": {
+    "message": "Wikipedia button",
+    "description": "Wikipedia button feature name"
+  },
+  "wikipediaDescription": {
+    "message": "Adds a link to its Wikipedia article on every card.",
+    "description": "Wikipedia button feature description"
+  },
+  "wikipediaOpen": {
+    "message": "Open the Wikipedia article",
+    "description": "Wikipedia button tooltip and aria-label"
   }
 }

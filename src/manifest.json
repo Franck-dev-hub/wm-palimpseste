@@ -13,7 +13,8 @@
   "content_scripts": [
     {
       "matches": ["https://*.wiki-masters.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
   ],
   "browser_specific_settings": {

@@ -1,6 +1,7 @@
 import { fakeBrowser } from '@webext-core/fake-browser';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ext } from '../shared/ext';
+import { features } from '../shared/features';
 import { setFeature } from '../shared/settings';
 import html from './options.html?raw';
 import { renderOptions } from './page';
@@ -48,6 +49,13 @@ describe('renderOptions', () => {
     await renderOptions(registry);
     expect(checkbox('alpha').checked).toBe(true);
     expect(checkbox('beta').checked).toBe(false);
+  });
+
+  it('shows the Wikipedia feature enabled by default', async () => {
+    await renderOptions(features);
+    const row = checkbox('wikipedia').closest('li');
+    expect(row?.textContent).toContain('t:wikipediaName');
+    expect(checkbox('wikipedia').checked).toBe(true);
   });
 
   it('checks the switches from the stored settings', async () => {

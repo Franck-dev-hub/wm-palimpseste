@@ -3,6 +3,7 @@ import en from '../_locales/en/messages.json';
 import fr from '../_locales/fr/messages.json';
 import manifest from '../manifest.json';
 import optionsHtml from '../options/options.html?raw';
+import { contentMessageKeys } from '../content/wikipedia';
 import { features, type Feature } from './features';
 
 type Messages = Record<string, { message: string }>;
@@ -26,6 +27,7 @@ const requiredKeys = [
   ...manifestKeys(JSON.stringify(manifest)),
   ...featureKeys(features),
   ...htmlKeys(optionsHtml),
+  ...contentMessageKeys,
 ];
 
 const localeErrors = (locales: Record<string, Messages>, required: readonly string[]): string[] => {
@@ -64,6 +66,10 @@ describe('locales', () => {
 
   it('require the options page keys', () => {
     expect(requiredKeys).toEqual(expect.arrayContaining(['optionsTitle', 'optionsEmpty']));
+  });
+
+  it('require the content script keys', () => {
+    expect(requiredKeys).toEqual(expect.arrayContaining(['wikipediaOpen']));
   });
 
   it('extracts the keys of a feature registry', () => {
