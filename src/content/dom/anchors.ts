@@ -44,3 +44,5 @@ export const hasImage = (card: Element): boolean => {
 
 export const modalWikiLink = (modal: Element): Element | null =>
   query('a[href^="https://fr.wikipedia.org/wiki/"]', modal);
+
+export const inDetailModal = (card: Element): boolean => card.closest(anchors.modal) !== null;

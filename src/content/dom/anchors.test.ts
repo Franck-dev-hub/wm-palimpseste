@@ -1,10 +1,20 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import collection from '../../../test/fixtures/collection.html?raw';
+import echanger from '../../../test/fixtures/echanger.html?raw';
 import historiqueEchange from '../../../test/fixtures/historique-echange.html?raw';
 import modale from '../../../test/fixtures/modale.html?raw';
 import offreEchange from '../../../test/fixtures/offre-echange.html?raw';
 import revele from '../../../test/fixtures/revele.html?raw';
-import { anchors, hasImage, imageZone, isShiny, modalWikiLink, rarity, title } from './anchors';
+import {
+  anchors,
+  hasImage,
+  imageZone,
+  inDetailModal,
+  isShiny,
+  modalWikiLink,
+  rarity,
+  title,
+} from './anchors';
 import { mark } from './query';
 
 // `?raw`, not `fs`: the root tsconfig has no Node types.
@@ -66,6 +76,34 @@ describe('anchors', () => {
 
     load(collection);
     expect(find('trade')).toBeNull();
+  });
+});
+
+describe('inDetailModal', () => {
+  it('is true for the card of the detail modal', () => {
+    load(modale);
+
+    expect(inDetailModal(find('card')!)).toBe(true);
+  });
+
+  it('is false for the cards of the collection', () => {
+    load(collection);
+
+    expect(findAll('card').map(inDetailModal)).toEqual([false, false]);
+  });
+
+  it('is false for the cards of the exchange screen', () => {
+    load(echanger);
+    const cards = findAll('card');
+
+    expect(cards).toHaveLength(6);
+    expect(cards.map(inDetailModal)).toEqual(Array(6).fill(false));
+  });
+
+  it('is false for the revealed card', () => {
+    load(revele);
+
+    expect(inDetailModal(find('revealed')!.firstElementChild!)).toBe(false);
   });
 });
 
