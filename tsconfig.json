@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
     "strict": true,
+    "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
     "verbatimModuleSyntax": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "preserve",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
-    "types": [],
+    "types": ["chrome"],
+    "resolveJsonModule": true,
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", "vitest.config.ts"]
 }

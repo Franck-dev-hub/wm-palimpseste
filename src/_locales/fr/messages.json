@@ -1,0 +1,18 @@
+{
+  "extName": {
+    "message": "Palimpseste pour WikiMasters",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Extension non officielle qui enrichit l'affichage de WikiMasters.",
+    "description": "Extension description"
+  },
+  "optionsTitle": {
+    "message": "Options",
+    "description": "Options page title and heading"
+  },
+  "optionsEmpty": {
+    "message": "Aucune feature pour l'instant.",
+    "description": "Options page text when no feature exists"
+  }
+}
