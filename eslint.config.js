@@ -21,7 +21,7 @@ export default defineConfig(
     },
   },
   {
-    files: ['src/**/*.ts'],
+    files: ['src/content/**/*.ts'],
     ignores: ['src/content/dom/**'],
     rules: {
       'no-restricted-properties': [

@@ -1,0 +1,31 @@
+:root {
+  color-scheme: light dark;
+}
+body {
+  font:
+    14px/1.4 system-ui,
+    sans-serif;
+  margin: 16px;
+}
+h1 {
+  font-size: 1.4em;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  margin-bottom: 12px;
+}
+label {
+  cursor: pointer;
+  display: block;
+}
+.name {
+  font-weight: 600;
+}
+.description {
+  display: block;
+  opacity: 0.75;
+}

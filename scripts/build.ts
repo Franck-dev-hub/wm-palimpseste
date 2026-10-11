@@ -1,4 +1,4 @@
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, rm, writeFile } from 'node:fs/promises';
 import * as esbuild from 'esbuild';
 import base from '../src/manifest.json' with { type: 'json' };
 
@@ -26,6 +26,8 @@ const writeManifests: esbuild.Plugin = {
       for (const [browser, manifest] of Object.entries(manifests)) {
         await mkdir(`dist/${browser}`, { recursive: true });
         await writeFile(`dist/${browser}/manifest.json`, `${JSON.stringify(manifest, null, 2)}\n`);
+        await cp('src/_locales', `dist/${browser}/_locales`, { recursive: true });
+        await cp('src/options/options.html', `dist/${browser}/options.html`);
       }
     });
   },
@@ -37,6 +39,10 @@ const options: esbuild.BuildOptions = {
     { in: 'src/background/index.ts', out: 'firefox/background' },
     { in: 'src/content/index.ts', out: 'chromium/content' },
     { in: 'src/background/index.ts', out: 'chromium/background' },
+    { in: 'src/options/options.ts', out: 'firefox/options' },
+    { in: 'src/options/options.ts', out: 'chromium/options' },
+    { in: 'src/options/options.css', out: 'firefox/options' },
+    { in: 'src/options/options.css', out: 'chromium/options' },
   ],
   outdir: 'dist',
   bundle: true,
