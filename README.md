@@ -32,7 +32,10 @@ More info on cards, pulls and the market.
 
 Status: in development.
 
-- **Wikipedia button**: a W badge on every card opens its Wikipedia article in a new tab. Can be turned off in the options.
+- **Wikipedia button**: a W badge on every card opens its Wikipedia article in a new tab.
+- **Tags in the description**: in the tag menu of a card, the tags named in its description stand out (blue bar).
+- **Proposed tag**: the tag menu puts one of the player's tags first, marked with a ★. It is learned from the cards
+  already tagged, opened or seen in the collection, and from their Wikidata category.
 
 ---
 
