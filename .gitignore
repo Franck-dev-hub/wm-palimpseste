@@ -26,7 +26,7 @@ npm-debug.log*
 .DS_Store
 
 # documentation
-/docs/plans/
+/docs/plans
 /*.md
 !README.md
 !README.fr.md
