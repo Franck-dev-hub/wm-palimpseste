@@ -18,6 +18,12 @@ export const features = [
     descriptionKey: 'tagHighlightDescription',
     default: true,
   },
+  {
+    id: 'tag-proposal',
+    nameKey: 'tagProposalName',
+    descriptionKey: 'tagProposalDescription',
+    default: true,
+  },
 ] as const satisfies readonly Feature[];
 
 export type FeatureId = (typeof features)[number]['id'];

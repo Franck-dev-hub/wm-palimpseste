@@ -34,5 +34,17 @@
   "tagHighlightDescription": {
     "message": "Met en évidence les étiquettes citées dans la description de la carte.",
     "description": "Tag highlight feature description"
+  },
+  "tagProposalName": {
+    "message": "Étiquette proposée",
+    "description": "Tag proposal feature name"
+  },
+  "tagProposalDescription": {
+    "message": "Apprend vos étiquettes et propose la plus probable pour la carte ouverte.",
+    "description": "Tag proposal feature description"
+  },
+  "tagProposalHint": {
+    "message": "Wikidata : $1",
+    "description": "Tag menu line naming the Wikidata category"
   }
 }

@@ -3,7 +3,8 @@ import en from '../../src/_locales/en/messages.json';
 import fr from '../../src/_locales/fr/messages.json';
 import manifest from '../../src/manifest.json';
 import optionsHtml from '../../src/options/options.html?raw';
-import { contentMessageKeys } from '../../src/content/wikipedia';
+import { contentMessageKeys as tagProposalKeys } from '../../src/content/tag-proposal';
+import { contentMessageKeys as wikipediaKeys } from '../../src/content/wikipedia';
 import { features, type Feature } from '../../src/shared/features';
 
 type Messages = Record<string, { message: string }>;
@@ -27,7 +28,8 @@ const requiredKeys = [
   ...manifestKeys(JSON.stringify(manifest)),
   ...featureKeys(features),
   ...htmlKeys(optionsHtml),
-  ...contentMessageKeys,
+  ...wikipediaKeys,
+  ...tagProposalKeys,
 ];
 
 const localeErrors = (locales: Record<string, Messages>, required: readonly string[]): string[] => {
@@ -69,7 +71,7 @@ describe('locales', () => {
   });
 
   it('require the content script keys', () => {
-    expect(requiredKeys).toEqual(expect.arrayContaining(['wikipediaOpen']));
+    expect(requiredKeys).toEqual(expect.arrayContaining(['wikipediaOpen', 'tagProposalHint']));
   });
 
   it('extracts the keys of a feature registry', () => {

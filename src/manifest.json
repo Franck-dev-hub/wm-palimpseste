@@ -27,7 +27,7 @@
       "id": "palimpseste@franck-dev-hub.github.io",
       "strict_min_version": "140.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": ["websiteContent"]
       }
     },
     "gecko_android": {
