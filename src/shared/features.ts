@@ -12,6 +12,12 @@ export const features = [
     descriptionKey: 'wikipediaDescription',
     default: true,
   },
+  {
+    id: 'tag-highlight',
+    nameKey: 'tagHighlightName',
+    descriptionKey: 'tagHighlightDescription',
+    default: true,
+  },
 ] as const satisfies readonly Feature[];
 
 export type FeatureId = (typeof features)[number]['id'];

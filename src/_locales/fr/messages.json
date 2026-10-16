@@ -26,5 +26,13 @@
   "wikipediaOpen": {
     "message": "Ouvrir l'article Wikipédia",
     "description": "Wikipedia button tooltip and aria-label"
+  },
+  "tagHighlightName": {
+    "message": "Étiquettes citées",
+    "description": "Tag highlight feature name"
+  },
+  "tagHighlightDescription": {
+    "message": "Met en évidence les étiquettes citées dans la description de la carte.",
+    "description": "Tag highlight feature description"
   }
 }

@@ -26,5 +26,13 @@
   "wikipediaOpen": {
     "message": "Open the Wikipedia article",
     "description": "Wikipedia button tooltip and aria-label"
+  },
+  "tagHighlightName": {
+    "message": "Tags in description",
+    "description": "Tag highlight feature name"
+  },
+  "tagHighlightDescription": {
+    "message": "Highlights the tags named in the card description.",
+    "description": "Tag highlight feature description"
   }
 }
