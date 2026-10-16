@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "__MSG_extDescription__",
   "default_locale": "fr",
   "icons": {
@@ -27,7 +27,7 @@
       "id": "palimpseste@franck-dev-hub.github.io",
       "strict_min_version": "140.0",
       "data_collection_permissions": {
-        "required": ["none"]
+        "required": ["websiteContent"]
       }
     },
     "gecko_android": {

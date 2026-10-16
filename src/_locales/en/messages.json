@@ -26,5 +26,25 @@
   "wikipediaOpen": {
     "message": "Open the Wikipedia article",
     "description": "Wikipedia button tooltip and aria-label"
+  },
+  "tagHighlightName": {
+    "message": "Tags in description",
+    "description": "Tag highlight feature name"
+  },
+  "tagHighlightDescription": {
+    "message": "Highlights the tags named in the card description.",
+    "description": "Tag highlight feature description"
+  },
+  "tagProposalName": {
+    "message": "Proposed tag",
+    "description": "Tag proposal feature name"
+  },
+  "tagProposalDescription": {
+    "message": "Learns your tags and proposes the likeliest one for the open card.",
+    "description": "Tag proposal feature description"
+  },
+  "tagProposalHint": {
+    "message": "Wikidata: $1",
+    "description": "Tag menu line naming the Wikidata category"
   }
 }

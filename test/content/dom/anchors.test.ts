@@ -2,17 +2,25 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import collection from '../../fixtures/collection.html?raw';
 import echanger from '../../fixtures/echanger.html?raw';
 import historiqueEchange from '../../fixtures/historique-echange.html?raw';
+import listbox from '../../fixtures/listbox.html?raw';
 import modale from '../../fixtures/modale.html?raw';
 import offreEchange from '../../fixtures/offre-echange.html?raw';
 import revele from '../../fixtures/revele.html?raw';
 import {
   anchors,
+  cardDescription,
+  cardTags,
   hasImage,
   imageZone,
   inDetailModal,
+  isCreateOption,
   isShiny,
+  modalTitle,
   modalWikiLink,
   rarity,
+  tagChipName,
+  tagNames,
+  tagOptionLabel,
   title,
 } from '../../../src/content/dom/anchors';
 import { mark } from '../../../src/content/dom/query';
@@ -224,5 +232,191 @@ describe('modal wiki link', () => {
     find('card')!.prepend(container);
 
     expect(modalWikiLink(find('modal')!)?.getAttribute('href')).toBe(SITE_LINK);
+  });
+});
+
+describe('modal title', () => {
+  const modalWith = (href: string, card = ''): Element => {
+    document.body.innerHTML = `<div><a href="${href}"></a>${card}</div>`;
+    return document.body.firstElementChild!;
+  };
+
+  it('reads the title of the modal link', () => {
+    load(modale);
+
+    expect(modalTitle(find('modal')!)).toBe('Sonja Haraldsen');
+  });
+
+  it('keeps the homonymy qualifier and turns _ into spaces', () => {
+    const modal = modalWith(
+      'https://fr.wikipedia.org/wiki/Mercredi_(s%C3%A9rie_t%C3%A9l%C3%A9vis%C3%A9e)',
+    );
+
+    expect(modalTitle(modal)).toBe('Mercredi (série télévisée)');
+  });
+
+  it('decodes an encoded href', () => {
+    const modal = modalWith('https://fr.wikipedia.org/wiki/AC%2FDC');
+
+    expect(modalTitle(modal)).toBe('AC/DC');
+  });
+
+  it('falls back to the card title, never the truncated h2, without a link', () => {
+    document.body.innerHTML = `<div><h2>Sonja Hara…</h2><div class="rounded-2xl glow-l"><h3>Sonja Haraldsen</h3></div></div>`;
+
+    expect(modalTitle(document.body.firstElementChild!)).toBe('Sonja Haraldsen');
+  });
+
+  it('falls back to the card title on a malformed escape', () => {
+    const modal = modalWith(
+      'https://fr.wikipedia.org/wiki/%E0%A4%A',
+      '<div class="rounded-2xl glow-l"><h3>Sonja Haraldsen</h3></div>',
+    );
+
+    expect(modalTitle(modal)).toBe('Sonja Haraldsen');
+  });
+
+  it('is null without link nor card', () => {
+    expect(modalTitle(document.createElement('div'))).toBeNull();
+  });
+});
+
+describe('tag chips', () => {
+  it('reads the names of the chips of the modal', () => {
+    load(modale);
+
+    expect(findAll('tagChip')).toHaveLength(1);
+    expect(tagNames(find('modal')!)).toEqual(['Norvège']);
+    expect(tagChipName(find('tagChip')!)).toBe('Norvège');
+  });
+
+  it('is empty without chip', () => {
+    const modal = document.createElement('div');
+    modal.innerHTML = '<p>Étiquettes</p>';
+
+    expect(tagNames(modal)).toEqual([]);
+  });
+
+  it('reads nothing when the aria-label is not French', () => {
+    load(modale);
+    const button = document.querySelector('button[aria-label^="Retirer"]')!;
+    button.setAttribute('aria-label', 'Remove tag Norvège');
+
+    expect(find('tagChip')).toBeNull();
+    expect(tagNames(find('modal')!)).toEqual([]);
+    expect(tagChipName(button.parentElement!)).toBeNull();
+  });
+});
+
+describe('tag listbox', () => {
+  const [stateA, stateB] = listbox.split('<!-- Etat B').map((part) => part.trim());
+  const options = (): Element[] => findAll('tagOption');
+
+  it('tagListbox and tagOption match only inside the modal', () => {
+    load(stateA!);
+    expect(find('tagListbox')).toBeNull();
+
+    load(`<div class="fixed inset-0 z-50"><div class="card-frame">${stateA}</div></div>`);
+    expect(findAll('tagListbox')).toHaveLength(1);
+    expect(options()).toHaveLength(5);
+  });
+
+  it('reads the option labels without the colour dot', () => {
+    load(`<div class="fixed inset-0 z-50"><div class="card-frame">${stateA}</div></div>`);
+
+    expect(options().map(tagOptionLabel)).toEqual([
+      '31-09',
+      'Animaux',
+      'Art',
+      'Arts martiaux',
+      'Cinéma',
+    ]);
+    expect(options().some(isCreateOption)).toBe(false);
+  });
+
+  it('detects the Créer option and gives it no label', () => {
+    load(`<div class="fixed inset-0 z-50"><div class="card-frame">${stateB}</div></div>`);
+    const [create, ...rest] = options();
+
+    expect(rest).toEqual([]);
+    expect(isCreateOption(create!)).toBe(true);
+    expect(tagOptionLabel(create!)).toBeNull();
+  });
+
+  it('detects Créer without relying on its French text', () => {
+    load(`<div class="fixed inset-0 z-50"><div class="card-frame">${stateB}</div></div>`);
+    const create = options()[0]!;
+    create.querySelector('button > span')!.textContent = 'Create';
+
+    expect(isCreateOption(create)).toBe(true);
+  });
+
+  it('gives no label to an option of unknown shape', () => {
+    const option = document.createElement('li');
+    option.innerHTML = '<span>Art</span>';
+
+    expect(tagOptionLabel(option)).toBeNull();
+  });
+});
+
+describe('card description', () => {
+  it('reads the p after the h3, whitespace normalised', () => {
+    load(modale);
+
+    expect(cardDescription(find('card')!)).toBe(
+      'reine de Norvège de 1991 à 2026, devenue reine mère de Norvège',
+    );
+  });
+
+  it('is null without description', () => {
+    const card = document.createElement('div');
+    card.innerHTML = '<h3>Art</h3>';
+
+    expect(cardDescription(card)).toBeNull();
+  });
+});
+
+describe('card tags', () => {
+  const cards = (): Element[] => [...document.querySelectorAll(anchors.card)];
+  const withChips = (...names: string[]): Element => {
+    load(collection);
+    const [card] = cards();
+    const box = card!.querySelector('div.flex-wrap[class~="pb-0.5"]')!;
+    box.innerHTML = names
+      .map((name) => `<span class="inline-block rounded-full">${name}</span>`)
+      .join('');
+    return card!;
+  };
+
+  it('reads the names of the chips of a collection card', () => {
+    load(collection);
+    expect(cardTags(cards()[0]!)).toEqual(['Norvège']);
+  });
+
+  it('is empty for a card without chip container', () => {
+    load(collection);
+    expect(cardTags(cards()[1]!)).toEqual([]);
+  });
+
+  it('reads several chips', () => {
+    expect(cardTags(withChips('A', ' B '))).toEqual(['A', 'B']);
+  });
+
+  it('is unreadable when a chip shows an overflow', () => {
+    expect(cardTags(withChips('A', '+2'))).toBeNull();
+  });
+
+  it('is unreadable when a chip is empty', () => {
+    expect(cardTags(withChips('A', ''))).toBeNull();
+  });
+
+  it('is unreadable for a card of the detail modal', () => {
+    load(modale);
+    expect(cardTags(document.querySelector(anchors.card)!)).toBeNull();
+  });
+
+  it('is unreadable for an element that is not a card', () => {
+    load(collection);
+    expect(cardTags(document.body)).toBeNull();
   });
 });
