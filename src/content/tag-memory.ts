@@ -161,8 +161,9 @@ function namedIn(
 }
 
 export function propose(input: ProposeInput): Proposal | null {
-  const posed = new Set(input.posed);
-  const candidates = [...new Set(input.candidates)].filter((name) => !posed.has(name));
+  // Une carte déjà étiquetée n'a rien à se faire proposer (Q14)
+  if (input.posed.length > 0) return null;
+  const candidates = [...new Set(input.candidates)];
   const name =
     bestScored(input, candidates) ??
     namedIn(input, candidates, sameName) ??

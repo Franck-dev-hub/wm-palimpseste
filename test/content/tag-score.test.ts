@@ -54,19 +54,10 @@ describe('propose, score', () => {
     expect(propose({ ...base, memory })).toEqual({ kind: 'hint', label: 'Q1' });
   });
 
-  it('excludes a posed tag and takes the next best', () => {
-    const memory = {
-      A: card(['Q1'], ['SF', 'Drame']),
-      B: card(['Q1'], ['SF', 'Drame']),
-      C: card(['Q1'], ['SF']),
-    };
+  it('proposes nothing for a card that already has a tag, however strong the memory', () => {
+    const memory = { A: card(['Q1'], ['SF']), B: card(['Q1'], ['SF']), C: card(['Q1'], ['SF']) };
     expect(propose({ ...base, memory })).toEqual({ kind: 'tag', name: 'SF' });
-    expect(propose({ ...base, memory, posed: ['SF'] })).toEqual({ kind: 'tag', name: 'Drame' });
-  });
-
-  it('falls back when the next best is under the threshold', () => {
-    const memory = { A: card(['Q1'], ['SF', 'Drame']), B: card(['Q1'], ['SF']) };
-    expect(propose({ ...base, memory, posed: ['SF'] })).toEqual({ kind: 'hint', label: 'Q1' });
+    expect(propose({ ...base, memory, posed: ['Drame'] })).toBeNull();
   });
 
   it('ignores P31 when the open card has an occupation', () => {
@@ -122,9 +113,10 @@ describe('propose, exact name', () => {
     expect(propose(input)).toEqual({ kind: 'tag', name: 'Acteurs' });
   });
 
-  it('does not propose a posed tag', () => {
-    const input = { ...base, cats: [cat('Q2', 'Film')], candidates: ['Film'], posed: ['Film'] };
-    expect(propose(input)).toEqual({ kind: 'hint', label: 'Film' });
+  it('proposes nothing, not even a hint, for a card that already has a tag', () => {
+    const input = { ...base, cats: [cat('Q2', 'Film')], candidates: ['Film'], posed: ['Drame'] };
+    expect(propose({ ...input, posed: [] })).toEqual({ kind: 'tag', name: 'Film' });
+    expect(propose(input)).toBeNull();
   });
 
   it('matches an occupation by its first form', () => {

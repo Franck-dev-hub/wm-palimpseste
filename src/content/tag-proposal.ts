@@ -130,9 +130,35 @@ export const startTagProposal: Start = () => {
   let stopped = false;
 
   const onModal = (modal: Element): void => void learner.learn(modal);
+  // Une étiquette posée menu ouvert retire la proposition (Q14)
+  const withdraw = (modal: Element): void => {
+    const title = modalTitle(modal);
+    if (title !== null) proposed.delete(title);
+    for (const line of lines) {
+      if (modal.contains(line)) {
+        line.remove();
+        lines.delete(line);
+      }
+    }
+    for (const option of classed) {
+      if (modal.contains(option)) {
+        option.classList.remove(PROPOSED);
+        classed.delete(option);
+      }
+    }
+    for (const listbox of reordered) {
+      if (modal.contains(listbox)) {
+        listbox.classList.remove(REORDER);
+        reordered.delete(listbox);
+      }
+    }
+  };
+
   const onChip = (el: Element): void => {
     const modal = modalOf(el);
-    if (modal !== null) void learner.learn(modal);
+    if (modal === null) return;
+    withdraw(modal);
+    void learner.learn(modal);
   };
 
   const classify = (option: Element, name: string): void => {
@@ -148,18 +174,15 @@ export const startTagProposal: Start = () => {
     if (name !== undefined) classify(option, name);
   };
 
-  async function resolve(
-    listbox: Element,
-    modal: Element,
-    candidates: string[],
-    posed: string[],
-  ): Promise<void> {
+  async function resolve(listbox: Element, modal: Element, candidates: string[]): Promise<void> {
     try {
       const read = learner.learn(modal, true);
       const found = read === null ? null : await read.cats;
       if (read === null || found === null) return;
       const memory = await readTagMemory();
       if (stopped || !listbox.isConnected) return;
+      // Les puces arrivent parfois après le menu, d'où la relecture après les attentes
+      const posed = tagNames(modal);
       const proposal = propose({ title: read.title, cats: found.cats, candidates, posed, memory });
       if (proposal === null) return;
       if (proposal.kind === 'hint') {
@@ -182,7 +205,7 @@ export const startTagProposal: Start = () => {
   const onListbox = (listbox: Element): void => {
     const modal = modalOf(listbox);
     if (modal === null) return;
-    void resolve(listbox, modal, tagOptionLabels(listbox), tagNames(modal));
+    void resolve(listbox, modal, tagOptionLabels(listbox));
   };
 
   let pending: Snapshot[] = [];

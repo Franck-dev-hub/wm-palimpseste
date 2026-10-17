@@ -35,7 +35,7 @@ Statut : en développement.
 - **Bouton Wikipédia** : une pastille W sur chaque carte ouvre son article Wikipédia dans un nouvel onglet.
 - **Étiquettes dans la description** : dans le menu des étiquettes d'une carte, celles citées dans sa description
   ressortent (barre bleue).
-- **Étiquette proposée** : le menu des étiquettes propose en tête une étiquette du joueur, marquée d'une ★. Elle est apprise
+- **Étiquette proposée** : le menu des étiquettes propose en tête une étiquette du joueur, marquée d'une ★, seulement sur une carte sans étiquette. Elle est apprise
   des cartes déjà étiquetées, ouvertes ou vues dans la collection, et de leur catégorie Wikidata.
 
 ---
