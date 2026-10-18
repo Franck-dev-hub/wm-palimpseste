@@ -216,6 +216,12 @@ const state = () => ({
   proposed: proposedLabels(),
   reordered: reorderedLists().length,
 });
+const chipHtml = (() => {
+  mounted();
+  const html = chip().outerHTML;
+  document.body.innerHTML = '';
+  return html;
+})();
 const NONE = { lines: 0, proposed: [], reordered: 0 };
 
 describe('tag-proposal rendering', () => {
@@ -268,6 +274,56 @@ describe('tag-proposal rendering', () => {
     expect(listboxEl().firstElementChild).toBe(line());
     expect(proposedLabels()).toEqual([]);
     expect(reorderedLists()).toHaveLength(0);
+  });
+
+  it('shows neither the line nor the class on a card with a tag, and still learns it', async () => {
+    stubFetch(cinema());
+    mounted();
+    modal().insertAdjacentHTML('beforeend', stateA);
+    stop = proposal.startTagProposal();
+
+    await vi.waitFor(async () => expect((await entry())?.cats).toEqual(['Q6']));
+    await frame();
+    expect((await entry())?.tags).toEqual(['Norvège']);
+    expect(state()).toEqual(NONE);
+  });
+
+  it('proposes nothing when a chip arrives after the menu but before the categories', async () => {
+    let release: () => void = () => undefined;
+    const gate = new Promise<void>((resolve) => (release = resolve));
+    stubFetch(async () => {
+      await gate;
+      return cinema();
+    });
+    open();
+    stop = proposal.startTagProposal();
+    await frame();
+
+    modal().insertAdjacentHTML('beforeend', chipHtml);
+    release();
+    await vi.waitFor(async () => expect((await entry())?.cats).toEqual(['Q6']));
+    await frame();
+    expect(state()).toEqual(NONE);
+  });
+
+  it('removes the line, the class and the reorder class when a chip is added', async () => {
+    stubFetch(cinema());
+    open();
+    stop = proposal.startTagProposal();
+    await vi.waitFor(() => expect(proposedLabels()).toEqual(['Cinéma']));
+
+    modal().insertAdjacentHTML('beforeend', chipHtml);
+    await vi.waitFor(() => expect(state()).toEqual(NONE));
+  });
+
+  it('removes the Wikidata line when a chip is added', async () => {
+    stubFetch(human());
+    open();
+    stop = proposal.startTagProposal();
+    await vi.waitFor(() => expect(lines()).toHaveLength(1));
+
+    modal().insertAdjacentHTML('beforeend', chipHtml);
+    await vi.waitFor(() => expect(state()).toEqual(NONE));
   });
 
   it('shows nothing on failure', async () => {

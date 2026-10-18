@@ -34,7 +34,7 @@ Status: in development.
 
 - **Wikipedia button**: a W badge on every card opens its Wikipedia article in a new tab.
 - **Tags in the description**: in the tag menu of a card, the tags named in its description stand out (blue bar).
-- **Proposed tag**: the tag menu puts one of the player's tags first, marked with a ★. It is learned from the cards
+- **Proposed tag**: the tag menu puts one of the player's tags first, marked with a ★, only on a card with no tag yet. It is learned from the cards
   already tagged, opened or seen in the collection, and from their Wikidata category.
 
 ---
