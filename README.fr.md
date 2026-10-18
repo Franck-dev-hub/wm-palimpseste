@@ -23,8 +23,8 @@ Plus d'infos sur les cartes, les tirages et le marché.
 ## Principes
 
 - **Fair-play** : l'extension lit et affiche, elle n'automatise aucune fonctionnalité de base.
-- **Local** : les données restent dans le navigateur, privées et confidentielles.
-- **Non officielle** : non affilié à WikiMasters.
+- **Local** : les données restent privées, dans le navigateur.
+- **Non officielle** : non affiliée à WikiMasters.
 
 ---
 
@@ -35,8 +35,12 @@ Statut : en développement.
 - **Bouton Wikipédia** : une pastille W sur chaque carte ouvre son article Wikipédia dans un nouvel onglet.
 - **Étiquettes dans la description** : dans le menu des étiquettes d'une carte, celles citées dans sa description
   ressortent (barre bleue).
-- **Étiquette proposée** : le menu des étiquettes propose en tête une étiquette du joueur, marquée d'une ★, seulement sur une carte sans étiquette. Elle est apprise
-  des cartes déjà étiquetées, ouvertes ou vues dans la collection, et de leur catégorie Wikidata.
+- **Étiquette proposée** : sur une carte sans étiquette, le menu des étiquettes marque d'une ★ une étiquette du joueur.
+  Elle est apprise des cartes déjà étiquetées, ouvertes ou vues dans la collection, et de leur catégorie Wikidata.
+- **Menu des étiquettes amélioré** : les étiquettes d'une carte s'ouvrent dans une fenêtre à côté, toutes en vue,
+  triées, au clavier. Une étiquette posée s'affiche tout de suite. L'étiquetage en masse a la même liste.
+- **Panneau d'étiquettes au révélé** : à l'ouverture d'un paquet, le panneau d'étiquettes s'affiche à côté de chaque
+  carte révélée, sans clic. Sur mobile, un tiroir plié par défaut. Le joueur pose toujours lui-même ses étiquettes.
 
 ---
 

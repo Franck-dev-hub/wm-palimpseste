@@ -22,8 +22,8 @@ More info on cards, pulls and the market.
 
 ## Principles
 
-- **Fair play**: the extension reads and displays; it automates none of the core features.
-- **Local**: data stays in the browser, private and confidential.
+- **Fair play**: the extension reads and displays, it automates no core feature.
+- **Local**: data stays private, in the browser.
 - **Unofficial**: not affiliated with WikiMasters.
 
 ---
@@ -34,8 +34,12 @@ Status: in development.
 
 - **Wikipedia button**: a W badge on every card opens its Wikipedia article in a new tab.
 - **Tags in the description**: in the tag menu of a card, the tags named in its description stand out (blue bar).
-- **Proposed tag**: the tag menu puts one of the player's tags first, marked with a ★, only on a card with no tag yet. It is learned from the cards
-  already tagged, opened or seen in the collection, and from their Wikidata category.
+- **Proposed tag**: on a card with no tag yet, the tag menu marks one of the player's tags with a ★. It is learned from
+  the cards already tagged, opened or seen in the collection, and from their Wikidata category.
+- **Improved tag menu**: a card's tags open in a window beside it, all in view, sorted, keyboard friendly. A posed tag
+  shows at once. Bulk tagging in the collection gets the same list.
+- **Tag panel at reveal**: when a pack opens, the tag panel shows beside each revealed card, no click needed. On mobile,
+  a drawer folded by default. The player still poses every tag.
 
 ---
 
