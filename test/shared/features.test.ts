@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { assertFeatureId } from '../../src/content/dom/query';
+import { starters } from '../../src/content/features';
 import { features, type Feature } from '../../src/shared/features';
 
 const registryErrors = (registry: readonly Feature[]): string[] => {
@@ -27,6 +28,19 @@ const fake = (id: string): Feature => ({
 describe('feature registry', () => {
   it('has only valid, unique ids', () => {
     expect(registryErrors(features)).toEqual([]);
+  });
+
+  it('registers tag-menu on by default', () => {
+    expect(features).toContainEqual({
+      id: 'tag-menu',
+      nameKey: 'tagMenuName',
+      descriptionKey: 'tagMenuDescription',
+      default: true,
+    });
+  });
+
+  it('has a starter for every feature', () => {
+    expect(Object.keys(starters).sort()).toEqual(features.map(({ id }) => id).sort());
   });
 
   it('accepts a valid registry', () => {
