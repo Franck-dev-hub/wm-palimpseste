@@ -51,6 +51,14 @@
     "message": "Affiche le menu des étiquettes en liste complète dans une fenêtre à côté de la carte, ouverte d'office, les étiquettes posées en tête.",
     "description": "Tag menu feature description"
   },
+  "tagRevealName": {
+    "message": "Panneau d'étiquettes au révélé",
+    "description": "Tag reveal feature name"
+  },
+  "tagRevealDescription": {
+    "message": "Ouvre seule la fiche de la carte révélée et n'en montre que le panneau d'étiquettes, à côté de la carte.",
+    "description": "Tag reveal feature description"
+  },
   "tagMenuFailed": {
     "message": "Échec, réessaie",
     "description": "Tag menu message when a posed tag never appeared"

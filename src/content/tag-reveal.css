@@ -1,0 +1,68 @@
+/* tag-reveal.ts sets the marker on the window it opened, never on the player's */
+
+/* !important: Chrome loads our CSS before the site's, a rule of equal weight would win */
+div:has(> [data-wmpal-tag-reveal]) {
+  background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  /* The reveal arrows stay clickable under the overlay */
+  pointer-events: none !important;
+}
+
+/* Q32: the native card has transition: all, without none hiding it takes 300 ms and leaves a ghost */
+[data-wmpal-tag-reveal] {
+  visibility: hidden !important;
+  transition: none !important;
+  pointer-events: none !important;
+}
+
+[data-wmpal-tag-reveal] div:has(> div > [role='combobox']) {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Q31: everything outside the block is hidden, children included */
+[data-wmpal-tag-reveal]
+  *:not(div:has(> div > [role='combobox'])):not(div:has(> div > [role='combobox']) *) {
+  visibility: hidden !important;
+  transition: none !important;
+}
+
+/* Q25 and Q33: 1rem right of the card, top and rows set by tag-reveal.ts */
+@media (min-width: 64rem) {
+  [data-wmpal-tag-reveal][data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) {
+    top: var(--wmpal-reveal-top, 1rem);
+    left: calc(var(--wmpal-reveal-right, 50%) + 1rem);
+    min-width: 15rem;
+    max-width: calc(100vw - var(--wmpal-reveal-right, 50%) - 2rem);
+    max-height: calc(100vh - var(--wmpal-reveal-top, 1rem) - 1rem);
+    transform: none;
+  }
+
+  [data-wmpal-tag-reveal][data-wmpal-tag-menu='detail']
+    div:has(> div > [role='combobox'])
+    ul[role='listbox'] {
+    grid-template-rows: repeat(var(--wmpal-reveal-rows, var(--wmpal-tag-rows, 10)), auto);
+  }
+}
+
+/* Q35: drawer folded by default, only the title shows, tag-reveal.ts sets « open » on tap */
+@media (max-width: 63.99rem) {
+  [data-wmpal-tag-reveal]:not([data-wmpal-tag-reveal='open'])
+    div:has(> div > [role='combobox'])
+    > :not(p) {
+    display: none !important;
+  }
+
+  [data-wmpal-tag-reveal] div:has(> div > [role='combobox']) > p {
+    cursor: pointer;
+  }
+
+  [data-wmpal-tag-reveal] div:has(> div > [role='combobox']) > p::after {
+    content: ' ▴';
+  }
+
+  [data-wmpal-tag-reveal='open'] div:has(> div > [role='combobox']) > p::after {
+    content: ' ▾';
+  }
+}

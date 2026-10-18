@@ -39,6 +39,15 @@ describe('feature registry', () => {
     });
   });
 
+  it('registers tag-reveal on by default', () => {
+    expect(features).toContainEqual({
+      id: 'tag-reveal',
+      nameKey: 'tagRevealName',
+      descriptionKey: 'tagRevealDescription',
+      default: true,
+    });
+  });
+
   it('has a starter for every feature', () => {
     expect(Object.keys(starters).sort()).toEqual(features.map(({ id }) => id).sort());
   });
