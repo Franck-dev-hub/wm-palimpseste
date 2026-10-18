@@ -43,6 +43,26 @@
     "message": "Apprend vos étiquettes et propose la plus probable pour la carte ouverte.",
     "description": "Tag proposal feature description"
   },
+  "tagMenuName": {
+    "message": "Menu des étiquettes amélioré",
+    "description": "Tag menu feature name"
+  },
+  "tagMenuDescription": {
+    "message": "Affiche le menu des étiquettes en liste complète dans une fenêtre à côté de la carte, ouverte d'office, les étiquettes posées en tête.",
+    "description": "Tag menu feature description"
+  },
+  "tagRevealName": {
+    "message": "Panneau d'étiquettes au révélé",
+    "description": "Tag reveal feature name"
+  },
+  "tagRevealDescription": {
+    "message": "Ouvre seule la fiche de la carte révélée et n'en montre que le panneau d'étiquettes, à côté de la carte.",
+    "description": "Tag reveal feature description"
+  },
+  "tagMenuFailed": {
+    "message": "Échec, réessaie",
+    "description": "Tag menu message when a posed tag never appeared"
+  },
   "tagProposalHint": {
     "message": "Wikidata : $1",
     "description": "Tag menu line naming the Wikidata category"

@@ -43,6 +43,26 @@
     "message": "Learns your tags and proposes the likeliest one for the open card.",
     "description": "Tag proposal feature description"
   },
+  "tagMenuName": {
+    "message": "Improved tag menu",
+    "description": "Tag menu feature name"
+  },
+  "tagMenuDescription": {
+    "message": "Shows the tag menu as a full list in a window beside the card, open on its own, with posed tags on top.",
+    "description": "Tag menu feature description"
+  },
+  "tagRevealName": {
+    "message": "Tag panel at reveal",
+    "description": "Tag reveal feature name"
+  },
+  "tagRevealDescription": {
+    "message": "Opens the card window by itself and shows only its tag panel next to the revealed card.",
+    "description": "Tag reveal feature description"
+  },
+  "tagMenuFailed": {
+    "message": "Failed, try again",
+    "description": "Tag menu message when a posed tag never appeared"
+  },
   "tagProposalHint": {
     "message": "Wikidata: $1",
     "description": "Tag menu line naming the Wikidata category"

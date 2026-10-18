@@ -16,3 +16,6 @@ export const mark = (node: Element, feature: string): void => {
   assertFeatureId(feature);
   node.setAttribute('data-wmpal', feature);
 };
+
+// jsdom has no matchMedia: without it nothing matches
+export const mediaMatches = (media: string): boolean => window.matchMedia?.(media).matches ?? false;

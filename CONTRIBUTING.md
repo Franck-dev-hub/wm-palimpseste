@@ -19,10 +19,11 @@ pnpm test
 pnpm format
 ```
 
-Git hooks and CI run lint and tests; the CI `check` job must pass to merge into `main`.
+Git hooks and CI run lint and tests. The CI `check` job must pass to merge into `main`.
 
 Tests read HTML captures of the site from `test/fixtures/`.\
-The first line of a capture gives its URL and date: recapture it when the site changes, with no real player name.
+The first line of a capture gives its URL and date, or its source if rebuilt.\
+Recapture it when the site changes, with no real player name.
 
 ## Load the extension
 

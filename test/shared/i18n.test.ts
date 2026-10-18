@@ -3,6 +3,7 @@ import en from '../../src/_locales/en/messages.json';
 import fr from '../../src/_locales/fr/messages.json';
 import manifest from '../../src/manifest.json';
 import optionsHtml from '../../src/options/options.html?raw';
+import { contentMessageKeys as tagPendingKeys } from '../../src/content/tag-pending';
 import { contentMessageKeys as tagProposalKeys } from '../../src/content/tag-proposal';
 import { contentMessageKeys as wikipediaKeys } from '../../src/content/wikipedia';
 import { features, type Feature } from '../../src/shared/features';
@@ -29,6 +30,7 @@ const requiredKeys = [
   ...featureKeys(features),
   ...htmlKeys(optionsHtml),
   ...wikipediaKeys,
+  ...tagPendingKeys,
   ...tagProposalKeys,
 ];
 

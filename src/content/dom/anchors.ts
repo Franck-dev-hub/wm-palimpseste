@@ -5,14 +5,24 @@ const REMOVE_TAG = "Retirer l'étiquette ";
 const CHIP = `span:has(> button[aria-label^="${REMOVE_TAG}"])`;
 const WIKI_PREFIX = 'https://fr.wikipedia.org/wiki/';
 
+// No text nor role: the detail modal field is a combobox, the result view has no field.
+const BULK_MODAL = 'div.fixed.inset-0 > div.card-frame';
+const BULK_SEARCH = 'input[maxlength="48"]:not([role])';
+
 export const anchors = {
   card: 'div.rounded-2xl[class*="glow-"]:has(h3)',
   modal: 'div.fixed.inset-0.z-50 > div.card-frame',
   revealed: 'main [class*="animate-card-flip"]',
+  // No text: the only direct button of the card-frame, first (R9)
+  modalClose: 'div.fixed.inset-0.z-50 > div.card-frame > button[aria-label]:first-child',
   trade: `div.card-frame:has(button[aria-label="Voir le détail de l'échange"])`,
   tagChip: `div.fixed.inset-0.z-50 > div.card-frame ${CHIP}`,
   tagListbox: 'div.fixed.inset-0.z-50 > div.card-frame ul[role="listbox"]',
   tagOption: 'div.fixed.inset-0.z-50 > div.card-frame ul[role="listbox"] > li[role="option"]',
+  tagCombobox: 'div.fixed.inset-0.z-50 > div.card-frame input[role="combobox"]',
+  bulkTagModal: `${BULK_MODAL}:has(> div > ${BULK_SEARCH} + div)`,
+  bulkTagSearch: `${BULK_MODAL} > div > ${BULK_SEARCH}`,
+  bulkTagOption: `${BULK_MODAL} > div > ${BULK_SEARCH} + div > button[type="button"]`,
 } as const satisfies Record<string, string>;
 
 export type AnchorName = keyof typeof anchors;
@@ -65,7 +75,51 @@ export const cardTags = (card: Element): string[] | null => {
   return names.some((name) => name === '' || OVERFLOW.test(name)) ? null : names;
 };
 
+// One carousel on screen: several flipped nodes mean another view (e.g. a list)
+export const revealedCard = (): Element | null => {
+  const flips = queryAll(anchors.revealed);
+  return flips.length === 1 ? (flips[0]?.firstElementChild ?? null) : null;
+};
+
+// Without getAnimations (jsdom) no animation is seen: the card counts as flipped
+export const isFlipping = (card: Element): boolean => {
+  const flip = card.parentElement;
+  if (flip === null || !('getAnimations' in flip)) return false;
+  return flip
+    .getAnimations({ subtree: true })
+    .some((animation) => 'animationName' in animation && animation.playState === 'running');
+};
+
+export const REVEAL_MARK = 'data-wmpal-tag-reveal';
+
+export const isRevealWindow = (modal: Element): boolean => modal.hasAttribute(REVEAL_MARK);
+
+// The block's « Étiquettes » title, the only visible part of the folded drawer
+export const tagTitleOf = (block: Element): Element | null => query(':scope > p', block);
+
+export const isTextField = (el: Element): boolean =>
+  el.matches('input, textarea, select, [contenteditable]');
+
+export const tagListOf = (block: Element): Element | null =>
+  queryAll(anchors.tagListbox).find((list) => block.contains(list)) ?? null;
+
+export const hasTagListbox = (block: Element): boolean => tagListOf(block) !== null;
+
+export const openModals = (): Element[] => queryAll(anchors.modal);
+
+export const closeButtonOf = (modal: Element): Element | null =>
+  queryAll(anchors.modalClose).find((button) => modal.contains(button)) ?? null;
+
 export const modalOf = (el: Element): Element | null => el.closest(anchors.modal);
+
+export const bulkModalOf = (el: Element): Element | null => {
+  const modal = el.closest(BULK_MODAL);
+  return modal?.matches(anchors.bulkTagModal) ? modal : null;
+};
+
+export const tagBlockOf = (modal: Element): Element | null =>
+  queryAll(anchors.tagCombobox).find((input) => modal.contains(input))?.parentElement
+    ?.parentElement ?? null;
 
 export const modalTitle = (modal: Element): string | null => {
   const href = modalWikiLink(modal)?.getAttribute('href');

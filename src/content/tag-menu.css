@@ -1,0 +1,350 @@
+/* tag-menu.ts sets the marker, without it the native menu stays untouched */
+
+[data-wmpal-tag-menu='detail'] ul[role='listbox'] {
+  position: static;
+  max-height: none;
+  overflow: visible;
+}
+
+[data-wmpal-tag-menu='detail'] [role='option'] > button {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+/* The name is a text node: the ellipsis goes on the parent span, not on a flex */
+[data-wmpal-tag-menu='detail'] [role='option'] > button > span {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+[data-wmpal-tag-menu='detail'] [role='option'] > button > span > span[aria-hidden='true'] {
+  display: inline-block;
+  margin-right: 0.5rem;
+  vertical-align: baseline;
+}
+
+[data-wmpal-tag-menu='detail'] [role='option'][aria-selected='true'] > button > span {
+  overflow: visible;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-overflow: clip;
+}
+
+[data-wmpal-tag-menu='detail'] [role='option'] > div > button > span {
+  overflow: visible;
+  text-overflow: clip;
+}
+
+[data-wmpal-tag-menu='detail'] [role='option'] > div > label {
+  flex-shrink: 0;
+}
+
+/* Q14: the proposed option keeps its alphabetical place */
+[data-wmpal-tag-menu] .wmpal-proposed {
+  order: 0;
+}
+
+[data-wmpal-tag-menu='detail']
+  div:has(> div > [role='combobox'])
+  > div:not(:has(> [role='combobox']))
+  > span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* Q19: transform and backdrop-filter would make the modal the containing block of the fixed panel */
+@keyframes wmpal-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* !important: the animation wins, and Chrome loads the site CSS before ours */
+[data-wmpal-tag-menu='detail'] {
+  transform: none !important;
+  animation-name: wmpal-fade !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Q16: fixed panel detached from the modal */
+[data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) {
+  position: fixed;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.4);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+/* The gap replaces the native space-y margins */
+[data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) > * {
+  margin: 0 !important;
+}
+
+/* contents lifts the field and the list out of div.relative to order them with the rest */
+[data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) > div:has(> [role='combobox']) {
+  display: contents;
+}
+
+[data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) > p {
+  order: 0;
+}
+
+[data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) [role='combobox'] {
+  order: 1;
+}
+
+[data-wmpal-tag-menu='detail']
+  div:has(> div > [role='combobox'])
+  > div:not(:has(> [role='combobox'])) {
+  order: 2;
+}
+
+[data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) ul[role='listbox'] {
+  order: 3;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Desktop: panel right of the shifted modal, the pair stays centered */
+@media (min-width: 64rem) {
+  /* 17rem = panel width (16rem) + gap (1rem) */
+  [data-wmpal-tag-menu='detail'] {
+    margin-right: 17rem;
+  }
+
+  [data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) {
+    top: 50%;
+    left: calc(50% + 13.5rem);
+    transform: translateY(-50%);
+    width: max-content;
+    min-width: 16rem;
+    max-width: calc(50% - 14.5rem);
+    max-height: 90vh;
+    border-radius: 1rem;
+    /* Last resort only: panel at the screen edge */
+    overflow: auto;
+  }
+
+  /* Q17: top-to-bottom columns, --wmpal-tag-rows comes from tag-menu.ts */
+  [data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) ul[role='listbox'] {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(11rem, 1fr);
+    grid-template-rows: repeat(var(--wmpal-tag-rows, 10), auto);
+  }
+
+  /* A long name must not widen the panel, the ellipsis cuts it at the column */
+  [data-wmpal-tag-menu='detail'] ul[role='listbox'] > [role='option'] {
+    min-height: 2.25rem;
+    contain: inline-size;
+  }
+}
+
+/* Mobile: bottom drawer, the modal moves up above it */
+@media (max-width: 63.99rem) {
+  [data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-height: 50vh;
+    max-height: 50dvh;
+    border-width: 1px 0 0;
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  div:has(> [data-wmpal-tag-menu='detail']) {
+    padding-bottom: calc(50vh + 1rem);
+    padding-bottom: calc(50dvh + 1rem);
+  }
+
+  /* !important: the native max-h-[90vh] would overflow the top half */
+  [data-wmpal-tag-menu='detail'] {
+    max-height: 100% !important;
+  }
+
+  [data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) ul[role='listbox'] {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  [data-wmpal-tag-menu='detail']
+    div:has(> div > [role='combobox'])
+    > div:not(:has(> [role='combobox'])) {
+    flex-shrink: 0;
+    max-height: 5rem;
+    overflow-y: auto;
+  }
+
+  [data-wmpal-tag-menu='detail'] [role='option'] > button,
+  [data-wmpal-tag-menu='detail'] [role='option'] > div > button,
+  [data-wmpal-tag-menu='detail'] [role='option'] > div > label {
+    min-height: 44px;
+  }
+
+  [data-wmpal-tag-menu='detail'] [role='option'] > button {
+    display: flex;
+    align-items: center;
+  }
+
+  [data-wmpal-tag-menu='detail'] [role='option'] > button > span {
+    flex: 1;
+    min-width: 0;
+  }
+
+  [data-wmpal-tag-menu='detail'] [role='option'] > div > label {
+    min-width: 44px;
+  }
+
+  [data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) button[aria-label] {
+    position: relative;
+  }
+
+  /* Larger touch area without a bigger chip, narrow so it does not overlap the next one */
+  [data-wmpal-tag-menu='detail'] div:has(> div > [role='combobox']) button[aria-label]::after {
+    content: '';
+    position: absolute;
+    inset: -0.75rem -0.375rem;
+  }
+}
+
+/* Q15a: pending chip, a faded native chip */
+[data-wmpal-tag-menu='detail'] .wmpal-pending-zone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+[data-wmpal-tag-menu='detail'] .wmpal-pending-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  max-width: 100%;
+  padding: 0.125rem 0.625rem;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.06);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  opacity: 0.55;
+  overflow-wrap: anywhere;
+}
+
+[data-wmpal-tag-menu='detail'] .wmpal-pending-chip > span {
+  width: 0.625rem;
+  height: 0.625rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+}
+
+[data-wmpal-tag-menu='detail'] .wmpal-pending-message {
+  font-size: 0.75rem;
+}
+
+/* Q15a: the posed row stays hidden until the native chip shows, an attribute since React rewrites classes */
+[data-wmpal-tag-menu='detail'] [data-wmpal-pending] [data-wmpal-pending-row] {
+  display: none;
+}
+
+/* Bulk tagging (Q8, S2, S3): the list grows, the card-frame scrolls */
+[data-wmpal-tag-menu='bulk'] input + div {
+  max-height: none;
+  overflow: visible;
+}
+
+[data-wmpal-tag-menu='bulk'] input + div > button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+[data-wmpal-tag-menu='bulk'] input + div > button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+  background-color: var(--color-surface-light);
+}
+
+/* Native chip: background and inline style win without !important, the border stays readable for the dot */
+[data-wmpal-tag-menu='bulk'] input + div > button > span[style] {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border-width: 0;
+  background-color: transparent !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* The dot inherits the border color the site sets inline, no JS */
+[data-wmpal-tag-menu='bulk'] input + div > button > span[style]::before {
+  content: '';
+  display: inline-block;
+  box-sizing: content-box;
+  width: 0;
+  height: 0;
+  margin-right: 0.5rem;
+  border: 0.3125rem solid;
+  border-color: inherit;
+  border-radius: 9999px;
+}
+
+[data-wmpal-tag-menu='bulk'] input + div > button > span[style] + span:not([style]) {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+[data-wmpal-tag-menu='bulk'] input + div > button > span:not([style]):has(+ span[style]) {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* Q15c: ✓ set on click */
+[data-wmpal-tag-menu='bulk'] input + div > button {
+  position: relative;
+}
+
+[data-wmpal-tag-menu='bulk'] .wmpal-bulk-check {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  color: var(--color-accent);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+[data-wmpal-tag-menu='bulk'] .wmpal-pending-message {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 63.99rem) {
+  [data-wmpal-tag-menu='bulk'] input + div > button {
+    min-height: 44px;
+  }
+}

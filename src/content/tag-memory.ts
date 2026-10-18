@@ -161,7 +161,7 @@ function namedIn(
 }
 
 export function propose(input: ProposeInput): Proposal | null {
-  // Une carte déjà étiquetée n'a rien à se faire proposer (Q14)
+  // A card that already has a tag gets no proposal (Q14)
   if (input.posed.length > 0) return null;
   const candidates = [...new Set(input.candidates)];
   const name =

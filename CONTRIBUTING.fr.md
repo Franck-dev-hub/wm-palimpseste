@@ -19,10 +19,11 @@ pnpm test
 pnpm format
 ```
 
-Les hooks Git et la CI lancent le lint et les tests ; le job `check` de la CI doit passer pour merger dans `main`.
+Les hooks Git et la CI lancent le lint et les tests. Le job `check` de la CI doit passer pour merger dans `main`.
 
 Les tests lisent des captures HTML du site dans `test/fixtures/`.\
-La première ligne d'une capture donne son URL et sa date : la recapturer quand le site change, sans pseudo réel.
+La première ligne d'une capture donne son URL et sa date, ou sa source si elle est reconstruite.\
+La recapturer quand le site change, sans pseudo réel.
 
 ## Charger l'extension
 
