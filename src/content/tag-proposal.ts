@@ -130,7 +130,7 @@ export const startTagProposal: Start = () => {
   let stopped = false;
 
   const onModal = (modal: Element): void => void learner.learn(modal);
-  // Une étiquette posée menu ouvert retire la proposition (Q14)
+  // A tag posed while the menu is open removes the proposal (Q14)
   const withdraw = (modal: Element): void => {
     const title = modalTitle(modal);
     if (title !== null) proposed.delete(title);
@@ -181,7 +181,7 @@ export const startTagProposal: Start = () => {
       if (read === null || found === null) return;
       const memory = await readTagMemory();
       if (stopped || !listbox.isConnected) return;
-      // Les puces arrivent parfois après le menu, d'où la relecture après les attentes
+      // Chips sometimes land after the menu, hence the reread after the waits
       const posed = tagNames(modal);
       const proposal = propose({ title: read.title, cats: found.cats, candidates, posed, memory });
       if (proposal === null) return;
